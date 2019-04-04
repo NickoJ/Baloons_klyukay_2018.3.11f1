@@ -12,6 +12,7 @@ namespace Klyukay.Balloons
         private InRangeFloat _appearTime;
 
         private IList<Color> _colors;
+        private IList<BalloonModel> _balloonModels;
         
         private Coroutine _generateRoutine;
         
@@ -19,6 +20,7 @@ namespace Klyukay.Balloons
         {
             _pool = new MonoPool<Balloon>(settings.BalloonPrefab, settings.PoolInitSize);
             _appearTime = settings.BalloonAppearTime;
+            _balloonModels = settings.BalloonModels;
             _colors = settings.BalloonColors;
         }
 
@@ -43,14 +45,20 @@ namespace Klyukay.Balloons
                 yield return new WaitForSeconds(_appearTime.Next());
                 _pool.Release(balloon);
                 balloon = _pool.Take();
-                balloon.Prepare(GetRandomBalloonColor());
+                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor());
                 balloon.gameObject.SetActive(true);
             }
         }
 
+        private BalloonModel GetRandomBalloonModel()
+        {
+            if (_balloonModels == null || _balloonModels.Count == 0) return BalloonModel.Default;
+            return _balloonModels[Random.Range(0, _balloonModels.Count)];
+        }
+        
         private Color GetRandomBalloonColor()
         {
-            if (_colors?.Count == 0) return Color.red;
+            if (_colors == null || _colors.Count == 0) return Color.red;
             return _colors[Random.Range(0, _colors.Count)];
         }
         
