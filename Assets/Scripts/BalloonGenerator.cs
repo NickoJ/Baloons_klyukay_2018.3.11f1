@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Klyukay.Balloons
@@ -11,12 +11,15 @@ namespace Klyukay.Balloons
         private MonoPool<Balloon> _pool;
         private InRangeFloat _appearTime;
 
+        private IList<Color> _colors;
+        
         private Coroutine _generateRoutine;
         
         public void Initialize(GameSettings settings)
         {
             _pool = new MonoPool<Balloon>(settings.BalloonPrefab, settings.PoolInitSize);
             _appearTime = settings.BalloonAppearTime;
+            _colors = settings.BalloonColors;
         }
 
         public void BeginGeneratingBalloons()
@@ -34,12 +37,21 @@ namespace Klyukay.Balloons
 
         private IEnumerator GenerateBalloonsAsync()
         {
+            Balloon balloon = null;
             while (true)
             {
                 yield return new WaitForSeconds(_appearTime.Next());
-                Debug.Log($"Generate: {DateTime.Now}");
-//                var balloon = _pool.Take();
+                _pool.Release(balloon);
+                balloon = _pool.Take();
+                balloon.Prepare(GetRandomBalloonColor());
+                balloon.gameObject.SetActive(true);
             }
+        }
+
+        private Color GetRandomBalloonColor()
+        {
+            if (_colors?.Count == 0) return Color.red;
+            return _colors[Random.Range(0, _colors.Count)];
         }
         
     }

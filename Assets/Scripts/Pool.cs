@@ -14,9 +14,7 @@ namespace Klyukay.Balloons
         
         public MonoPool(T prefab, int initSize)
         {
-            if (prefab == null) throw new NullReferenceException();
-            
-            _prefab = prefab;
+            _prefab = prefab != null ? prefab : throw new NullReferenceException();
             for (int i = 0; i < initSize; i++)
             {
                 _queue.Enqueue(CreateNewItem());
@@ -27,7 +25,7 @@ namespace Klyukay.Balloons
 
         public void Release(T item)
         {
-            if (item == null) throw new NullReferenceException();
+            if (item == null) return;
             ResetItem(item);
             _queue.Enqueue(item);
         }
