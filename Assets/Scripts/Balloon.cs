@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Klyukay.Balloons
 {
@@ -15,7 +17,7 @@ namespace Klyukay.Balloons
 
         private Transform _cachedTransform;
 
-        public bool CanRelease => _cachedTransform.localPosition.y >= _releaseY;
+        public event Action<Balloon> FlewAway; 
         
         private void Awake()
         {
@@ -28,6 +30,13 @@ namespace Klyukay.Balloons
             var p = _cachedTransform.localPosition;
             p.y += Time.deltaTime * _moveSpeed;
             _cachedTransform.localPosition = p;
+            
+            if (p.y >= _releaseY) FlewAway?.Invoke(this);
+        }
+
+        private void OnDestroy()
+        {
+            FlewAway = null;
         }
 
         public void Prepare(BalloonModel model, Color color, Vector2 fieldSize)
@@ -37,11 +46,26 @@ namespace Klyukay.Balloons
             
             _spriteRender.color = color;
             var t = _cachedTransform;
+            
+            // Выставляем размеры шару
             t.localScale = new Vector3(_model.Size, _model.Size, 1);
+            // Расчет допустимых границ по x, в которых шар может находиться
             var widthRange = new Vector2((-fieldSize.x + _model.Size) / 2,(fieldSize.x - model.Size) / 2);
+            // Расчет точки откуда шар стартует
             var startY = (-fieldSize.y - _model.Size) / 2f;
+            // Расчет точки где шар должен исчезнуть
+            _releaseY = (fieldSize.y + _model.Size) / 2f;
+            
+            // Выставление стартовой позиции
             t.localPosition = new Vector3(Random.Range(widthRange.x, widthRange.y), startY, 0);
         }
+        
+        public void Reset()
+        {
+            FlewAway = null;
+            gameObject.SetActive(false);
+        }
+        
     }
     
 }
