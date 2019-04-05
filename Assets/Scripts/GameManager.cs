@@ -1,17 +1,24 @@
 ﻿using Klyukay.Balloons;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Klyukay.Balloons
 {
 
-    [SerializeField] private GameSettings settings;
-    
-    [SerializeField] private BalloonGenerator generator;
-
-    private void Start()
+    public class GameManager : MonoBehaviour
     {
-        generator.Initialize(settings);
-        
-        generator.BeginGeneratingBalloons();
+
+        [SerializeField] private GameSettings settings;
+
+        [SerializeField] private CameraSetup cameraSetup;
+        [SerializeField] private BalloonGenerator generator;
+
+        private void Start()
+        {
+            cameraSetup.Initialize(settings);
+            generator.Initialize(settings);
+
+            generator.BeginGeneratingBalloons();
+        }
     }
+
 }

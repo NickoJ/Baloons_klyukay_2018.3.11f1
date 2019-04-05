@@ -18,17 +18,33 @@ MonoBehaviour:
     value: 0.75
     offset: 0.65
   poolInitSize: 10
+  gameFieldInitWidth: 9
   balloonModels:
   - size: 1
     score: 1
     speed:
-      value: 100
-      offset: 50
+      value: 3
+      offset: 0
   - size: 0.5
     score: 1
     speed:
-      value: 100
-      offset: 50
+      value: 3
+      offset: 0.5
+  - size: 0.25
+    score: 1
+    speed:
+      value: 4
+      offset: 0.25
+  - size: 0.75
+    score: 1
+    speed:
+      value: 3.5
+      offset: 0.1
+  - size: 1.25
+    score: 1
+    speed:
+      value: 2.5
+      offset: 0.05
   balloonColors:
   - {r: 1, g: 0.48584908, b: 0.8247613, a: 1}
   - {r: 0.50286084, g: 0.8962264, b: 0.3931559, a: 1}

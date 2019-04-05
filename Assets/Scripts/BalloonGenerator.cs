@@ -9,8 +9,8 @@ namespace Klyukay.Balloons
     {
 
         private MonoPool<Balloon> _pool;
-        private InRangeFloat _appearTime;
 
+        private GameSettings _settings;
         private IList<Color> _colors;
         private IList<BalloonModel> _balloonModels;
         
@@ -19,7 +19,8 @@ namespace Klyukay.Balloons
         public void Initialize(GameSettings settings)
         {
             _pool = new MonoPool<Balloon>(settings.BalloonPrefab, settings.PoolInitSize);
-            _appearTime = settings.BalloonAppearTime;
+            
+            _settings = settings;
             _balloonModels = settings.BalloonModels;
             _colors = settings.BalloonColors;
         }
@@ -39,13 +40,11 @@ namespace Klyukay.Balloons
 
         private IEnumerator GenerateBalloonsAsync()
         {
-            Balloon balloon = null;
             while (true)
             {
-                yield return new WaitForSeconds(_appearTime.Next());
-                _pool.Release(balloon);
-                balloon = _pool.Take();
-                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor());
+                yield return new WaitForSeconds(_settings.BalloonAppearTime.Next());
+                var balloon = _pool.Take();
+                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), _settings.GameFieldSize);
                 balloon.gameObject.SetActive(true);
             }
         }

@@ -14,15 +14,22 @@ namespace Klyukay.Balloons
         [SerializeField] private Balloon balloonPrefab;
         [SerializeField] private InRangeFloat balloonAppearTime = new InRangeFloat(5, 4); 
         [SerializeField] private int poolInitSize = 10;
+        
+        [SerializeField] private float gameFieldInitWidth;
+        
         [SerializeField] private BalloonModel[] balloonModels;
         [SerializeField] private Color[] balloonColors;
-        
+
         public Balloon BalloonPrefab => balloonPrefab;
         public InRangeFloat BalloonAppearTime => balloonAppearTime;
         public int PoolInitSize => poolInitSize;
+
+        public float GameFieldInitWidth => gameFieldInitWidth;
+
         public ReadOnlyCollection<BalloonModel> BalloonModels => Array.AsReadOnly(balloonModels);
         public ReadOnlyCollection<Color> BalloonColors => Array.AsReadOnly(balloonColors);
         
+        public Vector2 GameFieldSize { get; set; }
     }
     
 }
