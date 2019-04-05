@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace Klyukay.Balloons.Controllers
 {
 
-    public class TimerController : MonoBehaviour
+    public class Timer : MonoBehaviour
     {
 
         [SerializeField] private Slider timerSlider;
@@ -19,6 +19,12 @@ namespace Klyukay.Balloons.Controllers
             timerSlider.maxValue = settings.SessionTime;
 
             gm.GameStateChanged += SetupViewsForState;
+            SetupViewsForState(gm.State);
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.Instance.GameStateChanged -= SetupViewsForState;
         }
 
         private void Update()

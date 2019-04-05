@@ -61,7 +61,7 @@ namespace Klyukay.Balloons
             GameStateChanged = null;
         }
 
-        private void StartGame()
+        public void StartGame()
         {
             if (State == GameState.Started) return;
             
