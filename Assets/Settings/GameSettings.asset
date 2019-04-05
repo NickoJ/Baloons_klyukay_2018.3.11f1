@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef2714bcc9d4475b83ca20eb2914026, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
+  sessionTime: 60
   balloonPrefab: {fileID: 7474394806702194243, guid: f3265da8921ee462d92c0736d541caf3,
     type: 3}
   balloonAppearTime:

@@ -1,4 +1,4 @@
-﻿using Klyukay.Balloons;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Klyukay.Balloons
@@ -12,13 +12,39 @@ namespace Klyukay.Balloons
         [SerializeField] private CameraSetup cameraSetup;
         [SerializeField] private BalloonGenerator generator;
 
+        private float _gameTimer;
+        
         private void Start()
         {
             cameraSetup.Initialize(settings);
             generator.Initialize(settings);
 
-            generator.BeginGeneratingBalloons();
+            StartGame();
         }
+
+        private void StartGame()
+        {
+            _gameTimer = settings.SessionTime;
+            generator.BeginGeneratingBalloons();
+            StartCoroutine(GameSessionTick());
+        }
+
+        private void StopGame()
+        {
+            generator.StopGeneratingBallons();
+        }
+
+        private IEnumerator GameSessionTick()
+        {
+            while (_gameTimer > 0)
+            {
+                yield return null;
+                _gameTimer -= Time.deltaTime;
+            }
+
+            StopGame();
+        }
+        
     }
 
 }

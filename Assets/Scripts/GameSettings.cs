@@ -11,6 +11,8 @@ namespace Klyukay.Balloons
     public class GameSettings : ScriptableObject
     {
 
+        [SerializeField] private float sessionTime = 60f;
+        
         [SerializeField] private Balloon balloonPrefab;
         [SerializeField] private InRangeFloat balloonAppearTime = new InRangeFloat(5, 4); 
         [SerializeField] private int poolInitSize = 10;
@@ -20,6 +22,8 @@ namespace Klyukay.Balloons
         [SerializeField] private BalloonModel[] balloonModels;
         [SerializeField] private Color[] balloonColors;
 
+        public float SessionTime => sessionTime;
+        
         public Balloon BalloonPrefab => balloonPrefab;
         public InRangeFloat BalloonAppearTime => balloonAppearTime;
         public int PoolInitSize => poolInitSize;
