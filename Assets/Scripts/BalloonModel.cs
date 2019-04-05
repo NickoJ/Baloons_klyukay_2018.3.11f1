@@ -6,17 +6,17 @@ namespace Klyukay.Balloons
     [System.Serializable]
     public class BalloonModel
     {
-        public static readonly BalloonModel Default = new BalloonModel(1, 1, new InRangeFloat(1, 0));  
+        public static readonly BalloonModel Default = new BalloonModel(1, 1, new RandomRangeFloat(1, 0));  
         
         [SerializeField] private float size;
         [SerializeField] private float score;
-        [SerializeField] private InRangeFloat speed;
+        [SerializeField] private RandomRangeFloat speed;
 
         public float Size => size;
         public float Points => score;
-        public InRangeFloat Speed => speed;
+        public RandomRangeFloat Speed => speed;
 
-        public BalloonModel(float size, float score, InRangeFloat speed)
+        public BalloonModel(float size, float score, RandomRangeFloat speed)
         {
             this.size = size;
             this.score = score;

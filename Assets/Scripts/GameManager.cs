@@ -33,7 +33,8 @@ namespace Klyukay.Balloons
         }
         
         public float GameTimer { get; private set; }
-
+        public float GameSpeed => settings.AccelerationCurve.Evaluate(1f - GameTimer / settings.SessionTime);
+        
         public GameSettings Settings => settings;
 
         public event Action<GameState> GameStateChanged; 

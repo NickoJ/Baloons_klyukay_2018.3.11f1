@@ -4,13 +4,13 @@ namespace Klyukay.Balloons
 {
     
     [System.Serializable]
-    public struct InRangeFloat
+    public struct RandomRangeFloat
     {
         
         [SerializeField] private float value;
         [SerializeField] private float offset;
 
-        public InRangeFloat(int value, int offset)
+        public RandomRangeFloat(int value, int offset)
         {
             this.value = value;
             this.offset = offset;

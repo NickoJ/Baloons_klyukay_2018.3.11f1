@@ -12,9 +12,10 @@ namespace Klyukay.Balloons
     {
 
         [SerializeField] private float sessionTime = 60f;
+        [SerializeField] private AnimationCurve accelerationCurve;
         
         [SerializeField] private Balloon balloonPrefab;
-        [SerializeField] private InRangeFloat balloonAppearTime = new InRangeFloat(5, 4); 
+        [SerializeField] private RandomRangeFloat balloonAppearTime = new RandomRangeFloat(5, 4); 
         [SerializeField] private int poolInitSize = 10;
         
         [SerializeField] private float gameFieldInitWidth;
@@ -22,10 +23,11 @@ namespace Klyukay.Balloons
         [SerializeField] private BalloonModel[] balloonModels;
         [SerializeField] private Color[] balloonColors;
 
-        public float SessionTime => sessionTime;
-        
+        public float SessionTime => sessionTime > 0 ? sessionTime : 1f;
+        public AnimationCurve AccelerationCurve => accelerationCurve;
+
         public Balloon BalloonPrefab => balloonPrefab;
-        public InRangeFloat BalloonAppearTime => balloonAppearTime;
+        public RandomRangeFloat BalloonAppearTime => balloonAppearTime;
         public int PoolInitSize => poolInitSize;
 
         public float GameFieldInitWidth => gameFieldInitWidth;

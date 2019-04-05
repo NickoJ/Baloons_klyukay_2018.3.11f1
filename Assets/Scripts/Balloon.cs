@@ -39,10 +39,10 @@ namespace Klyukay.Balloons
             FlewAway = null;
         }
 
-        public void Prepare(BalloonModel model, Color color, Vector2 fieldSize)
+        public void Prepare(BalloonModel model, Color color, float gameSpeed, Vector2 fieldSize)
         {
             _model = model;
-            _moveSpeed = _model.Speed.Next();
+            _moveSpeed = _model.Speed.Next() * gameSpeed;
             
             _spriteRender.color = color;
             var t = _cachedTransform;

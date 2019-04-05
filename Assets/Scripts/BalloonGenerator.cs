@@ -50,12 +50,13 @@ namespace Klyukay.Balloons
 
         private IEnumerator GenerateBalloonsAsync()
         {
+            var gm = GameManager.Instance;
             while (true)
             {
                 yield return new WaitForSeconds(_settings.BalloonAppearTime.Next());
                 var balloon = _pool.Take();
                 balloon.FlewAway += BalloonOnFlewAway;
-                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), _settings.GameFieldSize);
+                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), gm.GameSpeed, _settings.GameFieldSize);
                 _flyingBalloons.Add(balloon);
                 balloon.gameObject.SetActive(true);
             }

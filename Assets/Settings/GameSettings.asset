@@ -13,6 +13,30 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   sessionTime: 60
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.3
+      inSlope: 1.1238347
+      outSlope: 1.1238347
+      tangentMode: 0
+      weightedMode: 2
+      inWeight: 0
+      outWeight: 0.577957
+    - serializedVersion: 3
+      time: 1
+      value: 2
+      inSlope: 0.1544345
+      outSlope: 0.1544345
+      tangentMode: 0
+      weightedMode: 1
+      inWeight: 0.49327958
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   balloonPrefab: {fileID: 7474394806702194243, guid: f3265da8921ee462d92c0736d541caf3,
     type: 3}
   balloonAppearTime:
