@@ -13,7 +13,8 @@ namespace Klyukay.Balloons
         private GameSettings _settings;
         private IList<Color> _colors;
         private IList<BalloonModel> _balloonModels;
-        
+
+        private readonly HashSet<Balloon> _flyingBalloons = new HashSet<Balloon>();
         private Coroutine _generateRoutine;
         
         public void Initialize(GameSettings settings)
@@ -27,15 +28,24 @@ namespace Klyukay.Balloons
 
         public void BeginGeneratingBalloons()
         {
+            StopGeneratingBalloons();
+            ResetAllFlyingBalloons();
             _generateRoutine = StartCoroutine(GenerateBalloonsAsync());
         }
 
-        public void StopGeneratingBallons()
+        public void StopGeneratingBalloons()
         {
             if (_generateRoutine == null) return;
             
             StopCoroutine(_generateRoutine);
             _generateRoutine = null;
+        }
+
+        private void ResetAllFlyingBalloons()
+        {
+            foreach (var balloon in _flyingBalloons) _pool.Release(balloon);
+            
+            _flyingBalloons.Clear();
         }
 
         private IEnumerator GenerateBalloonsAsync()
@@ -46,6 +56,7 @@ namespace Klyukay.Balloons
                 var balloon = _pool.Take();
                 balloon.FlewAway += BalloonOnFlewAway;
                 balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), _settings.GameFieldSize);
+                _flyingBalloons.Add(balloon);
                 balloon.gameObject.SetActive(true);
             }
         }
@@ -53,6 +64,7 @@ namespace Klyukay.Balloons
         private void BalloonOnFlewAway(Balloon b)
         {
             b.Reset();
+            _flyingBalloons.Remove(b);
             _pool.Release(b);
         }
 

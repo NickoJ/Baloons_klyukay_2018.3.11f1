@@ -64,19 +64,42 @@ namespace Klyukay.Balloons
         public void StartGame()
         {
             if (State == GameState.Started) return;
-            
+
             GameTimer = settings.SessionTime;
             generator.BeginGeneratingBalloons();
 
             State = GameState.Started;
+            Time.timeScale = 1f;
             
             StartCoroutine(GameSessionTick());
         }
 
+        public void PauseGame()
+        {
+            if (State != GameState.Started) return;
+
+            Time.timeScale = 0f;
+            State = GameState.Paused;
+        }
+        
+        public void RestartGame()
+        {
+            if (State != GameState.Paused) return;
+            StartGame();
+        }
+
+        public void ContinueGame()
+        {
+            if (State != GameState.Paused) return;
+
+            State = GameState.Started;
+            Time.timeScale = 1f;
+        }
+        
         private void StopGame()
         {
             if (State == GameState.NotStarted) return;
-            generator.StopGeneratingBallons();
+            generator.StopGeneratingBalloons();
 
             State = GameState.NotStarted;
         }

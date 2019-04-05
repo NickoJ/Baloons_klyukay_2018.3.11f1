@@ -18,12 +18,17 @@ namespace Klyukay.Balloons.Controllers
             SetupViewForState(gm.State);
         }
 
+        private void OnDestroy()
+        {
+            GameManager.Instance.GameStateChanged -= SetupViewForState;
+        }
+
         private void SetupViewForState(GameManager.GameState state)
         {
             gameObject.SetActive(state == GameManager.GameState.NotStarted);
         }
         
-        private void OnRestartRequest() => GameManager.Instance.StartGame();
+        private static void OnRestartRequest() => GameManager.Instance.StartGame();
         
     }
     
