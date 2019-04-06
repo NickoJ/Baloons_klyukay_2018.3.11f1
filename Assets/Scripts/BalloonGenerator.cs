@@ -56,7 +56,7 @@ namespace Klyukay.Balloons
                 yield return new WaitForSeconds(_settings.BalloonAppearTime.Next());
                 var balloon = _pool.Take();
                 balloon.FlewAway += BalloonOnFlewAway;
-                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), gm.GameSpeed, _settings.GameFieldSize);
+                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), gm.GameSpeed, _settings.GameFieldRect);
                 _flyingBalloons.Add(balloon);
                 balloon.gameObject.SetActive(true);
             }

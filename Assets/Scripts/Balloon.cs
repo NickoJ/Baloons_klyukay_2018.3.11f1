@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+
 using Random = UnityEngine.Random;
 
 namespace Klyukay.Balloons
@@ -39,7 +40,7 @@ namespace Klyukay.Balloons
             FlewAway = null;
         }
 
-        public void Prepare(BalloonModel model, Color color, float gameSpeed, Vector2 fieldSize)
+        public void Prepare(BalloonModel model, Color color, float gameSpeed, Vector4 fieldRect)
         {
             _model = model;
             _moveSpeed = _model.Speed.Next() * gameSpeed;
@@ -50,11 +51,11 @@ namespace Klyukay.Balloons
             // Выставляем размеры шару
             t.localScale = new Vector3(_model.Size, _model.Size, 1);
             // Расчет допустимых границ по x, в которых шар может находиться
-            var widthRange = new Vector2((-fieldSize.x + _model.Size) / 2,(fieldSize.x - model.Size) / 2);
+            var widthRange = new Vector2(fieldRect.x + _model.Size / 2f,fieldRect.z - model.Size / 2);
             // Расчет точки откуда шар стартует
-            var startY = (-fieldSize.y - _model.Size) / 2f;
+            var startY = fieldRect.y - _model.Size / 2f;
             // Расчет точки где шар должен исчезнуть
-            _releaseY = (fieldSize.y + _model.Size) / 2f;
+            _releaseY = fieldRect.w + _model.Size / 2f;
             
             // Выставление стартовой позиции
             t.localPosition = new Vector3(Random.Range(widthRange.x, widthRange.y), startY, 0);

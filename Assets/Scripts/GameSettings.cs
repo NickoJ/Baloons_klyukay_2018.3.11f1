@@ -35,7 +35,7 @@ namespace Klyukay.Balloons
         public ReadOnlyCollection<BalloonModel> BalloonModels => Array.AsReadOnly(balloonModels);
         public ReadOnlyCollection<Color> BalloonColors => Array.AsReadOnly(balloonColors);
         
-        public Vector2 GameFieldSize { get; set; }
+        public Vector4 GameFieldRect { get; set; }
     }
     
 }

@@ -9,6 +9,7 @@ namespace Klyukay.Balloons
 
         private GameSettings _settings;
         private Camera _camera;
+        private Transform _cachedTransform;
         
         public void Initialize(GameSettings settings)
         {
@@ -18,6 +19,7 @@ namespace Klyukay.Balloons
         private void Awake()
         {
             _camera = GetComponent<Camera>();
+            _cachedTransform = GetComponent<Transform>();
         }
 
         #if UNITY_EDITOR
@@ -31,8 +33,12 @@ namespace Klyukay.Balloons
         {
             float w = _settings.GameFieldInitWidth;
             float h = w / _camera.aspect;
-            _settings.GameFieldSize = new Vector2(w, h);
+            
             _camera.orthographicSize = h / 2f;
+
+            var cPos = _cachedTransform.position;
+            _settings.GameFieldRect = new Vector4(cPos.x - w / 2f, cPos.y - h / 2,
+                cPos.x + w / 2f, cPos.y + h / 2f);
         }
         
     }
