@@ -55,18 +55,19 @@ namespace Klyukay.Balloons
             {
                 yield return new WaitForSeconds(_settings.BalloonAppearTime.Next());
                 var balloon = _pool.Take();
-                balloon.FlewAway += BalloonOnFlewAway;
+                balloon.Released += OnBalloonRelease;
                 balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), gm.GameSpeed, _settings.GameFieldRect);
                 _flyingBalloons.Add(balloon);
                 balloon.gameObject.SetActive(true);
             }
         }
 
-        private void BalloonOnFlewAway(Balloon b)
+        private void OnBalloonRelease(BalloonReleaseEvent e)
         {
-            b.Reset();
-            _flyingBalloons.Remove(b);
-            _pool.Release(b);
+            //TODO: add points
+            e.Balloon.Reset();
+            _flyingBalloons.Remove(e.Balloon);
+            _pool.Release(e.Balloon);
         }
 
         private BalloonModel GetRandomBalloonModel()

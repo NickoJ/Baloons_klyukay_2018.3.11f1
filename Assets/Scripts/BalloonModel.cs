@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.Serialization;
+// ReSharper disable ConvertToAutoPropertyWithPrivateSetter
 
 namespace Klyukay.Balloons
 {
@@ -9,17 +11,17 @@ namespace Klyukay.Balloons
         public static readonly BalloonModel Default = new BalloonModel(1, 1, new RandomRangeFloat(1, 0));  
         
         [SerializeField] private float size;
-        [SerializeField] private float score;
+        [FormerlySerializedAs("score")] [SerializeField] private int points;
         [SerializeField] private RandomRangeFloat speed;
 
         public float Size => size;
-        public float Points => score;
+        public int Points => points;
         public RandomRangeFloat Speed => speed;
 
-        public BalloonModel(float size, float score, RandomRangeFloat speed)
+        public BalloonModel(float size, int points, RandomRangeFloat speed)
         {
             this.size = size;
-            this.score = score;
+            this.points = points;
             this.speed = speed;
         }
         
