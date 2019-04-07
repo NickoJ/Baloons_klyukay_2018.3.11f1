@@ -46,27 +46,27 @@ MonoBehaviour:
   gameFieldInitWidth: 9
   balloonModels:
   - size: 1
-    score: 1
+    points: 10
     speed:
       value: 3
       offset: 0
   - size: 0.5
-    score: 1
+    points: 20
     speed:
       value: 3
       offset: 0.5
   - size: 0.25
-    score: 1
+    points: 40
     speed:
       value: 4
       offset: 0.25
   - size: 0.75
-    score: 1
+    points: 15
     speed:
       value: 3.5
       offset: 0.1
   - size: 1.25
-    score: 1
+    points: 5
     speed:
       value: 2.5
       offset: 0.05

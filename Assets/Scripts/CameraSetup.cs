@@ -11,12 +11,12 @@ namespace Klyukay.Balloons
         private Camera _camera;
         private Transform _cachedTransform;
         
-        public void Initialize(GameSettings settings)
+        public void Initialize()
         {
-            _settings = settings;
+            _settings = GameManager.Instance.Settings;
         }
 
-        private void Awake()
+        private void Start()
         {
             _camera = GetComponent<Camera>();
             _cachedTransform = GetComponent<Transform>();

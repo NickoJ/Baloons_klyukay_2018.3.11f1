@@ -7,66 +7,54 @@ namespace Klyukay.Balloons
 {
     
     [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(BalloonMover))]
+    [RequireComponent(typeof(BalloonPopper))]
     public class Balloon : MonoBehaviour
     {
 
+        private Transform _cTransform;
         private SpriteRenderer _spriteRender;
+        private BalloonMover _mover;
+        private BalloonPopper _popper;
 
         private BalloonModel _model;
-        private float _moveSpeed;
-        private float _releaseY;
 
-        private Transform _cachedTransform;
-
-        public event Action<Balloon> FlewAway; 
+        public event Action<BalloonReleaseEvent> Released; 
         
         private void Awake()
         {
-            _cachedTransform = transform;
+            _cTransform = transform;
             _spriteRender = GetComponent<SpriteRenderer>();
-        }
-
-        private void Update()
-        {
-            var p = _cachedTransform.localPosition;
-            p.y += Time.deltaTime * _moveSpeed;
-            _cachedTransform.localPosition = p;
+            _mover = GetComponent<BalloonMover>();
+            _mover.Balloon = this;
             
-            if (p.y >= _releaseY) FlewAway?.Invoke(this);
+            _popper = GetComponent<BalloonPopper>();
+            _popper.Balloon = this;
         }
 
         private void OnDestroy()
         {
-            FlewAway = null;
+            Released = null;
         }
 
         public void Prepare(BalloonModel model, Color color, float gameSpeed, Vector4 fieldRect)
         {
             _model = model;
-            _moveSpeed = _model.Speed.Next() * gameSpeed;
-            
             _spriteRender.color = color;
-            var t = _cachedTransform;
-            
-            // Выставляем размеры шару
-            t.localScale = new Vector3(_model.Size, _model.Size, 1);
-            // Расчет допустимых границ по x, в которых шар может находиться
-            var widthRange = new Vector2(fieldRect.x + _model.Size / 2f,fieldRect.z - model.Size / 2);
-            // Расчет точки откуда шар стартует
-            var startY = fieldRect.y - _model.Size / 2f;
-            // Расчет точки где шар должен исчезнуть
-            _releaseY = fieldRect.w + _model.Size / 2f;
-            
-            // Выставление стартовой позиции
-            t.localPosition = new Vector3(Random.Range(widthRange.x, widthRange.y), startY, 0);
+            _cTransform.localScale = new Vector3(_model.Size, _model.Size, 1);
+
+            _mover.Prepare(_model.Speed.Next() * gameSpeed, _model.Size, fieldRect);
         }
+
+        public void OnFlewAway() => Released?.Invoke(new BalloonReleaseEvent(this, 0));
+        public void OnPop() => Released?.Invoke(new BalloonReleaseEvent(this, _model?.Points ?? 0));
         
         public void Reset()
         {
-            FlewAway = null;
+            Released = null;
             gameObject.SetActive(false);
         }
-        
+
     }
     
 }
