@@ -10,15 +10,15 @@ namespace Klyukay.BalloonsGame
         
         #region Singleton
         
+        //Singleton - зло
         public static GameManager Instance { get; private set; }
-        //P.S. Singleton - зло
         
         #endregion Singleton
 
         [SerializeField] private GameSettings settings;
 
         [SerializeField] private CameraSetup cameraSetup;
-        [SerializeField] private BalloonGenerator generator;
+        [SerializeField] private BalloonsProcessor generator;
 
         private GameState _state = GameState.NotStarted;
         public GameState State
@@ -139,7 +139,10 @@ namespace Klyukay.BalloonsGame
             Paused
         }
 
-        public void AddPoints(int points) => Points += points;
+        public void AddPoints(int points)
+        {
+            if (State == GameState.Started) Points += points;   
+        }
 
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Klyukay.BalloonsGame
 {
 
-    internal class BalloonGenerator : MonoBehaviour
+    internal class BalloonsProcessor : MonoBehaviour
     {
 
         private MonoPool<Balloon> _pool;
@@ -69,6 +69,8 @@ namespace Klyukay.BalloonsGame
 
         private void OnBalloonRelease(BalloonReleaseEvent e)
         {
+            if (e.Kind == ReleaseKind.Popped && _game.State == GameManager.GameState.Paused) return;
+
             _game.AddPoints(e.Points);
             
             e.Balloon.Reset();
