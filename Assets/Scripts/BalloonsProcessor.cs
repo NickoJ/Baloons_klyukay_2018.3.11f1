@@ -50,7 +50,11 @@ namespace Klyukay.BalloonsGame
 
         private void ResetAllFlyingBalloons()
         {
-            foreach (var balloon in _flyingBalloons) _pool.Release(balloon);
+            foreach (var balloon in _flyingBalloons)
+            {
+                balloon.Reset();
+                _pool.Release(balloon);
+            }
             
             _flyingBalloons.Clear();
         }
