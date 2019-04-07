@@ -20,6 +20,8 @@ namespace Klyukay.BalloonsGame
         {
             _camera = GetComponent<Camera>();
             _cachedTransform = GetComponent<Transform>();
+            
+            CalculateField();
         }
 
         #if UNITY_EDITOR

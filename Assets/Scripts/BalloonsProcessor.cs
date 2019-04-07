@@ -6,6 +6,9 @@ using UnityEngine;
 namespace Klyukay.BalloonsGame
 {
 
+    /// <summary>
+    /// Отвечает за генерацию, уничтожение и лопание шариков.
+    /// </summary>
     internal class BalloonsProcessor : MonoBehaviour
     {
 
