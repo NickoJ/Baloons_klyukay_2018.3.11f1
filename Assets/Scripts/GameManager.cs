@@ -2,25 +2,32 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
 
+    /// <summary>
+    /// Подсчитывает очки, следит за состоянием игры, подсчитывает время.  
+    /// </summary>
     public class GameManager : MonoBehaviour
     {
         
         #region Singleton
         
+        //Singleton - зло
         public static GameManager Instance { get; private set; }
-        //P.S. Singleton - зло
         
         #endregion Singleton
 
         [SerializeField] private GameSettings settings;
 
         [SerializeField] private CameraSetup cameraSetup;
-        [SerializeField] private BalloonGenerator generator;
+        [SerializeField] private BalloonsProcessor generator;
 
         private GameState _state = GameState.NotStarted;
+        
+        /// <summary>
+        /// Состояние игры: игра не запущена, запущена и на паузе.
+        /// </summary>
         public GameState State
         {
             get => _state;
@@ -32,15 +39,29 @@ namespace Klyukay.Balloons
             }
         }
         
+        /// <summary>
+        /// Время до конца игры.
+        /// </summary>
         public float GameTimer { get; private set; }
+        
+        /// <summary>
+        /// Скорость игры, в данный момент используется только для запуска шариков с нужной скоростью
+        /// </summary>
         public float GameSpeed => settings.AccelerationCurve.Evaluate(1f - GameTimer / settings.SessionTime);
+        
+        /// <summary>
+        /// Настройки игры
+        /// </summary>
         public GameSettings Settings => settings;
 
         private int _points;
+        /// <summary>
+        /// Набранное количество очков.
+        /// </summary>
         public int Points
         {
             get => _points;
-            set
+            private set
             {
                 value = Mathf.Max(value, 0);
                 if (_points == value) return;
@@ -50,7 +71,14 @@ namespace Klyukay.Balloons
             }
         }
 
+        /// <summary>
+        /// Событие, вызываемое при смене состояния игры.
+        /// </summary>
         public event Action<GameState> GameStateChanged;
+        
+        /// <summary>
+        /// Событие, вызываемое при обновлении количества очков.
+        /// </summary>
         public event Action<int> PointsChanged; 
         
         private void Awake()
@@ -76,6 +104,9 @@ namespace Klyukay.Balloons
             GameStateChanged = null;
         }
 
+        /// <summary>
+        /// Запускаем игру.
+        /// </summary>
         public void StartGame()
         {
             if (State == GameState.Started) return;
@@ -90,6 +121,9 @@ namespace Klyukay.Balloons
             StartCoroutine(GameSessionTick());
         }
 
+        /// <summary>
+        /// Ставим игру на паузу.
+        /// </summary>
         public void PauseGame()
         {
             if (State != GameState.Started) return;
@@ -98,12 +132,18 @@ namespace Klyukay.Balloons
             State = GameState.Paused;
         }
         
+        /// <summary>
+        /// Перезапускаем игру.
+        /// </summary>
         public void RestartGame()
         {
             if (State != GameState.Paused) return;
             StartGame();
         }
 
+        /// <summary>
+        /// Снимаем игру с паузы.
+        /// </summary>
         public void ContinueGame()
         {
             if (State != GameState.Paused) return;
@@ -112,6 +152,9 @@ namespace Klyukay.Balloons
             Time.timeScale = 1f;
         }
         
+        /// <summary>
+        /// Останавливаем игру.
+        /// </summary>
         private void StopGame()
         {
             if (State == GameState.NotStarted) return;
@@ -139,7 +182,10 @@ namespace Klyukay.Balloons
             Paused
         }
 
-        public void AddPoints(int points) => Points += points;
+        public void AddPoints(int points)
+        {
+            if (State == GameState.Started) Points += points;   
+        }
 
     }
 

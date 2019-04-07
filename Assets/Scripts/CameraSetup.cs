@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
 
     [RequireComponent(typeof(Camera))]
@@ -20,6 +20,8 @@ namespace Klyukay.Balloons
         {
             _camera = GetComponent<Camera>();
             _cachedTransform = GetComponent<Transform>();
+            
+            CalculateField();
         }
 
         #if UNITY_EDITOR

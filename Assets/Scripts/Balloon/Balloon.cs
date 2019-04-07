@@ -3,7 +3,7 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
     
     [RequireComponent(typeof(SpriteRenderer))]
@@ -46,8 +46,8 @@ namespace Klyukay.Balloons
             _mover.Prepare(_model.Speed.Next() * gameSpeed, _model.Size, fieldRect);
         }
 
-        public void OnFlewAway() => Released?.Invoke(new BalloonReleaseEvent(this, 0));
-        public void OnPop() => Released?.Invoke(new BalloonReleaseEvent(this, _model?.Points ?? 0));
+        public void OnFlewAway() => Released?.Invoke(new BalloonReleaseEvent(this, 0, ReleaseKind.FlyAway));
+        public void OnPop() => Released?.Invoke(new BalloonReleaseEvent(this, _model?.Points ?? 0, ReleaseKind.Popped));
         
         public void Reset()
         {

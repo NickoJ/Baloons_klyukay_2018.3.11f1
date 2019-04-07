@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Klyukay.Balloons
+namespace Klyukay.Helpers
 {
 
     public class MonoPool<T> where T : MonoBehaviour
