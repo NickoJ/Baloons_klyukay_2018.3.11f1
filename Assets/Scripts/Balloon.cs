@@ -8,13 +8,14 @@ namespace Klyukay.Balloons
     
     [RequireComponent(typeof(SpriteRenderer))]
     [RequireComponent(typeof(BalloonMover))]
-//    [RequireComponent(typeof(BalloonTouchDetector))]
+    [RequireComponent(typeof(BalloonPopper))]
     public class Balloon : MonoBehaviour
     {
 
         private Transform _cTransform;
         private SpriteRenderer _spriteRender;
         private BalloonMover _mover;
+        private BalloonPopper _popper;
 
         private BalloonModel _model;
 
@@ -26,6 +27,9 @@ namespace Klyukay.Balloons
             _spriteRender = GetComponent<SpriteRenderer>();
             _mover = GetComponent<BalloonMover>();
             _mover.Balloon = this;
+            
+            _popper = GetComponent<BalloonPopper>();
+            _popper.Balloon = this;
         }
 
         private void OnDestroy()

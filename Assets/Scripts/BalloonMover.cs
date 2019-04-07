@@ -18,7 +18,7 @@ namespace Klyukay.Balloons
             _cTransform = transform;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
             var p = _cTransform.localPosition;
             p.y += Time.deltaTime * _moveSpeed;

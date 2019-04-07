@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 7462698750319814753}
   - component: {fileID: 7474394806702194243}
   - component: {fileID: 4781913281067799220}
+  - component: {fileID: 6438545152057927338}
   - component: {fileID: 1753938536}
   - component: {fileID: 5925482598184596562}
-  m_Layer: 0
+  - component: {fileID: 461389436372064638}
+  m_Layer: 8
   m_Name: Balloon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +60,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f216104439c743839ba7065fb4619d21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  balloon: {fileID: 0}
+--- !u!114 &6438545152057927338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8266071379851297355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0424905ab994377b9710d36e55d8c10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &1753938536
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -123,3 +136,24 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!50 &461389436372064638
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8266071379851297355}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

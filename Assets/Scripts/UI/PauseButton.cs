@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Klyukay.Balloons.Controllers
+namespace Klyukay.Balloons.UI
 {
 
     [RequireComponent(typeof(Button))]

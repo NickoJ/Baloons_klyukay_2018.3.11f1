@@ -10,18 +10,21 @@ namespace Klyukay.Balloons
 
         private MonoPool<Balloon> _pool;
 
-        private GameSettings _settings;
+        private GameManager _game;
+        
         private IList<Color> _colors;
         private IList<BalloonModel> _balloonModels;
 
         private readonly HashSet<Balloon> _flyingBalloons = new HashSet<Balloon>();
         private Coroutine _generateRoutine;
         
-        public void Initialize(GameSettings settings)
+        public void Initialize()
         {
+            _game = GameManager.Instance;
+            
+            var settings = _game.Settings;
             _pool = new MonoPool<Balloon>(settings.BalloonPrefab, settings.PoolInitSize);
             
-            _settings = settings;
             _balloonModels = settings.BalloonModels;
             _colors = settings.BalloonColors;
         }
@@ -50,13 +53,14 @@ namespace Klyukay.Balloons
 
         private IEnumerator GenerateBalloonsAsync()
         {
-            var gm = GameManager.Instance;
+            var settings = _game.Settings;
+            
             while (true)
             {
-                yield return new WaitForSeconds(_settings.BalloonAppearTime.Next());
+                yield return new WaitForSeconds(settings.BalloonAppearTime.Next());
                 var balloon = _pool.Take();
                 balloon.Released += OnBalloonRelease;
-                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), gm.GameSpeed, _settings.GameFieldRect);
+                balloon.Prepare(GetRandomBalloonModel(), GetRandomBalloonColor(), _game.GameSpeed, settings.GameFieldRect);
                 _flyingBalloons.Add(balloon);
                 balloon.gameObject.SetActive(true);
             }
@@ -64,7 +68,8 @@ namespace Klyukay.Balloons
 
         private void OnBalloonRelease(BalloonReleaseEvent e)
         {
-            //TODO: add points
+            _game.AddPoints(e.Points);
+            
             e.Balloon.Reset();
             _flyingBalloons.Remove(e.Balloon);
             _pool.Release(e.Balloon);

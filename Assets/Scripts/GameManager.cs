@@ -10,8 +10,8 @@ namespace Klyukay.Balloons
         
         #region Singleton
         
-        //P.S. Singleton это зло, но в тестовом задании про шарики подтягивать DI контейнер это сурово.
         public static GameManager Instance { get; private set; }
+        //P.S. Singleton - зло
         
         #endregion Singleton
 
@@ -24,7 +24,7 @@ namespace Klyukay.Balloons
         public GameState State
         {
             get => _state;
-            set
+            private set
             {
                 if (_state == value) return;
                 _state = value;
@@ -34,11 +34,25 @@ namespace Klyukay.Balloons
         
         public float GameTimer { get; private set; }
         public float GameSpeed => settings.AccelerationCurve.Evaluate(1f - GameTimer / settings.SessionTime);
-        
         public GameSettings Settings => settings;
 
-        public event Action<GameState> GameStateChanged; 
+        private int _points;
+        public int Points
+        {
+            get => _points;
+            set
+            {
+                value = Mathf.Max(value, 0);
+                if (_points == value) return;
+                
+                _points = value;
+                PointsChanged?.Invoke(Points);
+            }
+        }
 
+        public event Action<GameState> GameStateChanged;
+        public event Action<int> PointsChanged; 
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -51,8 +65,8 @@ namespace Klyukay.Balloons
 
         private void Start()
         {
-            cameraSetup.Initialize(settings);
-            generator.Initialize(settings);
+            cameraSetup.Initialize();
+            generator.Initialize();
 
             StartGame();
         }
@@ -66,6 +80,7 @@ namespace Klyukay.Balloons
         {
             if (State == GameState.Started) return;
 
+            Points = 0;
             GameTimer = settings.SessionTime;
             generator.BeginGeneratingBalloons();
 
@@ -123,7 +138,9 @@ namespace Klyukay.Balloons
             Started,
             Paused
         }
-        
+
+        public void AddPoints(int points) => Points += points;
+
     }
 
 }
