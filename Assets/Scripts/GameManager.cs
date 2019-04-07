@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
 
     public class GameManager : MonoBehaviour

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Klyukay.Balloons.UI
+namespace Klyukay.BalloonsGame.UI
 {
     
     public class RestartPanel : MonoBehaviour

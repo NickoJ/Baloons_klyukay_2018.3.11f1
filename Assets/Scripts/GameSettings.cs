@@ -1,10 +1,11 @@
 using System;
 using System.Collections.ObjectModel;
+using Klyukay.Helpers;
 using UnityEngine;
 
 // ReSharper disable ConvertToAutoProperty
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
     
     [CreateAssetMenu(menuName = "Balloons/Game settings", fileName = "GameSettings")]

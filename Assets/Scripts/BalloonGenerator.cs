@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Klyukay.Helpers;
 using UnityEngine;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
 
     internal class BalloonGenerator : MonoBehaviour

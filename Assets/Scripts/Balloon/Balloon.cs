@@ -3,7 +3,7 @@ using UnityEngine;
 
 using Random = UnityEngine.Random;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
     
     [RequireComponent(typeof(SpriteRenderer))]

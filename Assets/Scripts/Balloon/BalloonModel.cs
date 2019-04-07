@@ -1,8 +1,9 @@
+using Klyukay.Helpers;
 using UnityEngine;
 using UnityEngine.Serialization;
-// ReSharper disable ConvertToAutoPropertyWithPrivateSetter
 
-namespace Klyukay.Balloons
+
+namespace Klyukay.BalloonsGame
 {
     
     [System.Serializable]
@@ -14,9 +15,11 @@ namespace Klyukay.Balloons
         [FormerlySerializedAs("score")] [SerializeField] private int points;
         [SerializeField] private RandomRangeFloat speed;
 
+        // ReSharper disable ConvertToAutoPropertyWithPrivateSetter
         public float Size => size;
         public int Points => points;
         public RandomRangeFloat Speed => speed;
+        // ReSharper restore ConvertToAutoPropertyWithPrivateSetter
 
         public BalloonModel(float size, int points, RandomRangeFloat speed)
         {

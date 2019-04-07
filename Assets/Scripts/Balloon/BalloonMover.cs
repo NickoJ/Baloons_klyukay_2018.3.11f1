@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
     
     public class BalloonMover : MonoBehaviour

@@ -1,4 +1,4 @@
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
     public readonly struct BalloonReleaseEvent
     {

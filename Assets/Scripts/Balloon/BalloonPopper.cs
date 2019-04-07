@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Klyukay.Balloons
+namespace Klyukay.BalloonsGame
 {
     
     public class BalloonPopper : MonoBehaviour, IPointerDownHandler
